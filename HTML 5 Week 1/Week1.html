@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 1</title>
+</head>
+
+<body>
+    <!-- ye hamara drawing area hai jahan js ke zariye drawing karein ge -->
+    <canvas id="myCanvas" width="500" height="400" style="border: 1px solid black;"></canvas>
+
+    <!-- <script>
+        const canvas = document.getElementById("myCanvas");
+        const ctx = canvas.getContext("2d");
+
+        // rectangle
+        ctx.fillStyle = "blue";  // color
+        ctx.fillRect(50, 50, 100, 60);   // x, y, width, height
+
+        // cricle 
+        ctx.beginPath();
+        ctx.arc(250, 200, 40, 0, Math.PI * 2); // x, y, radius, startangle, endangle
+        ctx.fillStyle = "red";
+        ctx.fill();
+
+        // line
+        ctx.beginPath();
+        ctx.moveTo(400, 100);
+        ctx.lineTo(400, 300);
+        ctx.strokeStyle = "green";
+        ctx.lineWidth = 3;
+        ctx.stroke();
+
+        // text
+        ctx.font = "20px, Arial";
+        ctx.fillStyle = "black";
+        ctx.fillText("Hello from Canvas", 100, 300);
+
+    </script> -->
+
+    <script>
+        // const canvas = document.getElementById("myCanvas");
+        // const ctx = canvas.getContext("2d");
+
+        // let x = 50;
+        // let y = 50;
+        // let dx = 1;
+        // let dy = 1;
+        // const rectWidth  = 50;
+        // const rectHeight = 40;
+
+        // function draw(){
+        //     // claear canvas
+        //     ctx.clearRect(0,0,canvas.width, canvas.height);
+
+        //     // draw rectangle
+        //     ctx.fillStyle = "blue";
+        //     ctx.fillRect(x,y,rectWidth, rectHeight);
+
+        //     // move the rectangle
+        //     x  += dx;
+        //     y += dy;
+
+        //     // bounce off edge
+
+        //     if(x + rectHeight > canvas.width || x < 0){
+        //         dx = -dx;  // reverse vertical direction
+        //     }
+
+        //     if(y + rectHeight > canvas.height || y < 0){
+        //         dy = -dy;
+        //     }
+
+        //     requestAnimationFrame(draw);
+        // }
+
+
+        // draw();
+    </script>
+
+<!-- <script src="Task1and2.js"></script> -->
+<script src="Task3.js"></script>
+</body>
+
+</html>

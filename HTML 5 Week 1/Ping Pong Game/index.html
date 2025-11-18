@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ping Pong Game</title>
+
+    <style>
+      #pingPongCanvas {
+        position: relative;
+        z-index: 1;
+      }
+      .game-container {
+        position: relative;
+        width: 500px; /* same as canvas */
+        height: 400px; /* same as canvas */
+        border: 2px solid;
+      }
+
+      #restartBtn,
+      #quitBtn {
+        position: absolute;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 2;
+      }
+
+      #restartBtn {
+        left: 45%;
+      }
+
+      #quitBtn {
+        left: 55%;
+      }
+      
+    </style>
+  </head>
+  <body>
+    <div class="game-container">
+      <canvas id="pingPongCanvas" width="500" height="400"></canvas>
+      <button id="restartBtn">Restart</button>
+      <button id="quitBtn">Quit</button>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
