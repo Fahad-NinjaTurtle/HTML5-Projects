@@ -1,0 +1,83 @@
+// scripts/gameManager.js
+import { Animate } from "./animate.js";
+import { Draw, ResetStates } from "./render.js";
+import { gameState } from "./gameState.js";
+import { setupInput } from "./inputManager.js";
+
+// @ts-nocheck
+export const pingPongCanvas = /** @type {HTMLCanvasElement} */ (
+  document.getElementById("pingPongCanvas")
+);
+export const pingPongCtx = pingPongCanvas.getContext("2d");
+
+const restartBtn = document.getElementById("restartBtn");
+const quitBtn = document.getElementById("quitBtn");
+
+// now that we know canvas size, set paddle top position
+gameState.paddleTopPos = pingPongCanvas.height - gameState.paddleHeight;
+
+// set up keyboard + mouse + touch controls (needs canvas)
+setupInput(pingPongCanvas);
+
+// update call
+const Update = (dt) => {
+  if (!gameState.gameOver) {
+    Animate(dt);
+    Draw(dt);
+  }
+};
+
+const RestartGame = () => {
+  gameState.gameOver = false;
+  gameState.score = 0;
+
+  ResetStates(); // reset ball + paddle + velocities
+
+  pingPongCtx.clearRect(0, 0, pingPongCanvas.width, pingPongCanvas.height);
+  DisableUi();
+  lastTime = performance.now();
+};
+
+// starting of the game loop
+let lastTime = 0;
+const frames = 60;
+const targetFps = 1000 / frames; // 1000 ms = 1 sec
+
+function loop(currentTime) {
+  const deltaTime = currentTime - lastTime;
+
+  if (deltaTime >= targetFps) {
+    Update(deltaTime);
+    lastTime = currentTime;
+  }
+
+  requestAnimationFrame(loop);
+}
+
+export const EnableUi = () => {
+  restartBtn.style.display = "block";
+  quitBtn.style.display = "block";
+};
+
+const DisableUi = () => {
+  restartBtn.style.display = "none";
+  quitBtn.style.display = "none";
+};
+
+DisableUi();
+ResetStates(); // set initial random positions etc.
+
+// buttons listeners
+restartBtn.addEventListener("click", () => {
+  RestartGame();
+});
+
+quitBtn.addEventListener("click", () => {
+  alert("Coward!!!");
+});
+
+// start the loop
+requestAnimationFrame((time) => {
+  lastTime = time;
+  requestAnimationFrame(loop);
+});
