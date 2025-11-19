@@ -1,7 +1,7 @@
 // scripts/collision.js
 import { gameState } from "./gameState.js";
 import { pingPongCanvas, EnableUi } from "./gameManager.js";
-
+import { SoundManager } from "./soundManager.js";
 export const CheckCollision = () => {
   const g = gameState;
 
@@ -11,9 +11,10 @@ export const CheckCollision = () => {
     g.circleY + g.circleSize > g.paddleTopPos &&
     g.circleY - g.circleSize < g.paddleTopPos + g.paddleHeight
   ) {
-    g.score++;
+    // g.score++;
     g.circleY = g.paddleTopPos - g.circleSize;
     g.circleYUpdate = -Math.abs(g.circleYUpdate); // bounce upward
+    SoundManager.play("bounce")
   }
 };
 
@@ -22,5 +23,6 @@ export const BallGroundCheck = () => {
   if (gameState.circleY + gameState.circleSize >= pingPongCanvas.height) {
     gameState.gameOver = true;
     EnableUi();
+    SoundManager.play("gameOver")
   }
 };

@@ -1,8 +1,9 @@
-// scripts/gameManager.js
 import { Animate } from "./animate.js";
 import { Draw, ResetStates } from "./render.js";
 import { gameState } from "./gameState.js";
 import { setupInput } from "./inputManager.js";
+import { CreateBricks } from "./brickManager.js";
+import { SoundManager } from "./soundManager.js";
 
 // @ts-nocheck
 export const pingPongCanvas = /** @type {HTMLCanvasElement} */ (
@@ -13,11 +14,12 @@ export const pingPongCtx = pingPongCanvas.getContext("2d");
 const restartBtn = document.getElementById("restartBtn");
 const quitBtn = document.getElementById("quitBtn");
 
-// now that we know canvas size, set paddle top position
 gameState.paddleTopPos = pingPongCanvas.height - gameState.paddleHeight;
 
-// set up keyboard + mouse + touch controls (needs canvas)
 setupInput(pingPongCanvas);
+CreateBricks();
+SoundManager.init();
+// CheckLevelComplete();
 
 // update call
 const Update = (dt) => {
@@ -30,7 +32,8 @@ const Update = (dt) => {
 const RestartGame = () => {
   gameState.gameOver = false;
   gameState.score = 0;
-
+  gameState.bricksArray = [];
+  CreateBricks();
   ResetStates(); // reset ball + paddle + velocities
 
   pingPongCtx.clearRect(0, 0, pingPongCanvas.width, pingPongCanvas.height);
@@ -55,6 +58,7 @@ function loop(currentTime) {
 }
 
 export const EnableUi = () => {
+  gameState.gameOver = true;
   restartBtn.style.display = "block";
   quitBtn.style.display = "block";
 };
@@ -81,3 +85,20 @@ requestAnimationFrame((time) => {
   lastTime = time;
   requestAnimationFrame(loop);
 });
+
+
+export const CheckLevelComplete=()=>{
+  for(var i =0;i<gameState.bricksArray.length; i++){
+    for(var j=0; j<gameState.bricksArray[i].length; j++){
+      if(gameState.bricksArray[i][j].alive){
+        console.log("Still bricks Avaiable");
+        return;
+      }
+    }
+  }
+  LevelComplete();
+}
+const LevelComplete = () => {
+  SoundManager.play("levelComplete")
+  EnableUi();
+};

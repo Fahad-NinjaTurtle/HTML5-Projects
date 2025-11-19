@@ -1,4 +1,3 @@
-// scripts/inputManager.js
 import { gameState } from "./gameState.js";
 
 export const setupInput = (pingPongCanvas) => {

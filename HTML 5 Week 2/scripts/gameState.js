@@ -1,4 +1,3 @@
-// scripts/gameState.js
 export const gameState = {
   // ball
   circleX: 30,
@@ -12,7 +11,7 @@ export const gameState = {
   paddleLeftPos: 200,
   paddleWidth: 100,
   paddleHeight: 20,
-  paddleTopPos: 0, // will be set from gameManager once canvas is known
+  paddleTopPos: 0, 
 
   // game status
   score: 0,
@@ -21,4 +20,6 @@ export const gameState = {
   // input flags
   moveLeft: false,
   moveRight: false,
+
+  bricksArray: []
 };

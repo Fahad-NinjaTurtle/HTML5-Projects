@@ -1,14 +1,14 @@
-// scripts/render.js
 import { pingPongCanvas, pingPongCtx } from "./gameManager.js";
 import { gameState } from "./gameState.js";
-
+import { DrawBricks } from "./brickManager.js";
 // draw calls
 export const Draw = (dt) => {
   pingPongCtx.clearRect(0, 0, pingPongCanvas.width, pingPongCanvas.height);
-  DrawFps(dt);
-  DrawScore();
   DrawBall();
   DrawPaddle();
+  DrawBricks();
+  DrawFps(dt);
+  DrawScore();
 };
 
 // fps function
@@ -20,7 +20,12 @@ const DrawFps = (dt) => {
   const fps = 1000 / dt;
   pingPongCtx.font = "20px Arial";
   pingPongCtx.fillStyle = "black";
-  pingPongCtx.fillText("FPS : " + Math.round(fps), textLeft, textTop, textWidth);
+  pingPongCtx.fillText(
+    "FPS : " + Math.round(fps),
+    textLeft,
+    textTop,
+    textWidth
+  );
 };
 
 // draw score
@@ -75,13 +80,32 @@ const DrawPaddle = () => {
 
 export const ResetStates = () => {
   // randomize starting ball position (top half of screen)
-  gameState.circleX = Math.random() * pingPongCanvas.width;
-  gameState.circleY = Math.random() * (pingPongCanvas.height / 2);
+  gameState.circleX = Math.random() * pingPongCanvas.width / 2;
+  gameState.circleY = (pingPongCanvas.height / 2);
 
   gameState.circleXUpdate = 200 * (Math.random() > 0.5 ? 1 : -1);
   gameState.circleYUpdate = 200;
 
   // center paddle
-  gameState.paddleLeftPos =
-    (pingPongCanvas.width - gameState.paddleWidth) / 2;
+  gameState.paddleLeftPos = (pingPongCanvas.width - gameState.paddleWidth) / 2;
 };
+
+// let isBricksInitialized = false;
+// const DrawBricks = () => {
+//   if (!isBricksInitialized) {
+
+
+//     isBricksInitialized = true;
+//   }
+//       for (var i = 0; i < 5; i++) {
+//       for (var j = 0; j < 5; j++) {
+//         console.log("hehe index is ", i, " ", j);
+//         DrawBrick(i,j)
+//       }
+//     }
+// };
+
+// const DrawBrick = (i,j)=>{
+//   pingPongCtx.fillStyle = "blue"
+//   pingPongCtx.fillRect(0*j, 50*i, 100*i, 10*j)
+// }
