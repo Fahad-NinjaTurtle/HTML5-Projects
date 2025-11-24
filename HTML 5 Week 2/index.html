@@ -18,7 +18,8 @@
       }
 
       #restartBtn,
-      #quitBtn {
+      #quitBtn,
+      #nextLevelBtn {
         position: absolute;
         top: 50%;
         transform: translate(-50%, -50%);
@@ -28,17 +29,30 @@
       #restartBtn {
         left: 45%;
       }
-
+      #nextLevelBtn{
+        top: 40%;
+        left: 49%;
+      }
       #quitBtn {
         left: 55%;
+      }
+      #winText{
+        position: absolute;
+        z-index: 2;
+        top: 70%;
+        left: 40%;
+        /* transform: translate(-50%, -50%); */
       }
     </style>
   </head>
   <body>
     <div class="game-container">
       <canvas id="pingPongCanvas" width="500" height="400"></canvas>
+      <button id="nextLevelBtn">Next Level</button>
       <button id="restartBtn">Restart</button>
       <button id="quitBtn">Quit</button>
+
+      <h2 id="winText">You Won</h2>
     </div>
 
     <!-- <script src="script.js"></script> -->

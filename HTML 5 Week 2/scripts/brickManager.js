@@ -1,8 +1,9 @@
 import { pingPongCtx, CheckLevelComplete } from "./gameManager.js";
 import { gameState } from "./gameState.js";
 import { SoundManager } from "./soundManager.js";
-export const brickRows = 2;
-export const brickCols = 8;
+
+// const getBrickRows = () => gameState.bricksRow;
+// const getBrickCols = () => gameState.bricksColumn;
 
 export const brickWidth = 60.7;
 export const brickHeight = 20;
@@ -12,7 +13,6 @@ export const brickOffsetLeft = 0;
 
 let bricks = gameState.bricksArray; // 2D array
 
-// Brick class (similar to a prefab in Unity)
 class Brick {
   constructor(x, y, color) {
     this.x = x;
@@ -33,10 +33,10 @@ const getRandomColor = () => {
 export const CreateBricks = () => {
   bricks = [];
 
-  for (let row = 0; row < brickRows; row++) {
+  for (let row = 0; row < gameState.bricksRow; row++) {
     bricks[row] = [];
 
-    for (let col = 0; col < brickCols; col++) {
+    for (let col = 0; col < gameState.bricksColumn; col++) {
       const x = brickOffsetLeft + col * (brickWidth + brickPadding);
       const y = brickOffsetTop + row * (brickHeight + brickPadding);
 
@@ -50,8 +50,8 @@ export const CreateBricks = () => {
 // Draw all bricks (Unity: Update() → Render)
 export const DrawBricks = () => {
     const bricks = gameState.bricksArray;
-  for (let row = 0; row < brickRows; row++) {
-    for (let col = 0; col < brickCols; col++) {
+  for (let row = 0; row < gameState.bricksRow; row++) {
+    for (let col = 0; col < gameState.bricksColumn; col++) {
       const brick = bricks[row][col];
 
       if (brick.alive) {

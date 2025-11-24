@@ -13,6 +13,8 @@ export const pingPongCtx = pingPongCanvas.getContext("2d");
 
 const restartBtn = document.getElementById("restartBtn");
 const quitBtn = document.getElementById("quitBtn");
+const nextLevelBtn = document.getElementById("nextLevelBtn");
+const winText = document.getElementById("winText");
 
 gameState.paddleTopPos = pingPongCanvas.height - gameState.paddleHeight;
 
@@ -33,6 +35,9 @@ const RestartGame = () => {
   gameState.gameOver = false;
   gameState.score = 0;
   gameState.bricksArray = [];
+  gameState.bricksRow = 1;
+  gameState.currentLevel = 1;
+  gameState.ballLife = 3;
   CreateBricks();
   ResetStates(); // reset ball + paddle + velocities
 
@@ -61,11 +66,14 @@ export const EnableUi = () => {
   gameState.gameOver = true;
   restartBtn.style.display = "block";
   quitBtn.style.display = "block";
+  UpdateHightScore();
 };
 
 const DisableUi = () => {
   restartBtn.style.display = "none";
   quitBtn.style.display = "none";
+  nextLevelBtn.style.display = "none";
+  winText.style.display = "none";
 };
 
 DisableUi();
@@ -80,25 +88,59 @@ quitBtn.addEventListener("click", () => {
   alert("Coward!!!");
 });
 
+nextLevelBtn.addEventListener("click", () => {
+  ProceedToNextLevel();
+});
 // start the loop
 requestAnimationFrame((time) => {
   lastTime = time;
   requestAnimationFrame(loop);
 });
 
-
-export const CheckLevelComplete=()=>{
-  for(var i =0;i<gameState.bricksArray.length; i++){
-    for(var j=0; j<gameState.bricksArray[i].length; j++){
-      if(gameState.bricksArray[i][j].alive){
+export const CheckLevelComplete = () => {
+  for (var i = 0; i < gameState.bricksArray.length; i++) {
+    for (var j = 0; j < gameState.bricksArray[i].length; j++) {
+      if (gameState.bricksArray[i][j].alive) {
         console.log("Still bricks Avaiable");
         return;
       }
     }
   }
   LevelComplete();
-}
+};
 const LevelComplete = () => {
-  SoundManager.play("levelComplete")
+  SoundManager.play("levelComplete");
+  // EnableUi();
+  EnableLevelWinUI();
+};
+
+const EnableLevelWinUI = () => {
+  nextLevelBtn.style = "block";
+  winText.style = "block";
+
   EnableUi();
 };
+
+const ProceedToNextLevel = () => {
+  pingPongCtx.clearRect(0, 0, pingPongCanvas.width, pingPongCanvas.height);
+    gameState.gameOver = false;
+  gameState.score = 0;
+  gameState.currentLevel++;
+  gameState.bricksRow++;
+  UpdateHightScore();
+
+  gameState.bricksArray = [];
+  CreateBricks();
+  ResetStates(); 
+
+  DisableUi();
+  lastTime = performance.now();
+};
+
+const UpdateHightScore = () => {
+  if (gameState.score > gameState.highScore) {
+    gameState.highScore = gameState.score;
+  }
+};
+
+

@@ -9,6 +9,9 @@ export const Draw = (dt) => {
   DrawBricks();
   DrawFps(dt);
   DrawScore();
+  DrawHighScore();
+  DrawLevel();
+  DrawBallLife();
 };
 
 // fps function
@@ -42,7 +45,34 @@ const DrawScore = () => {
     scoreTextWidth
   );
 };
+const DrawHighScore = () => {
+  pingPongCtx.fillStyle = "black";
+  pingPongCtx.fillText(
+    "High Score : " + gameState.highScore,
+    scoreTextLeft + 100,
+    scoreTextTop,
+    scoreTextWidth
+  );
+};
 
+const DrawLevel = () => {
+  pingPongCtx.fillStyle = "black";
+  pingPongCtx.fillText(
+    "Level : " + gameState.currentLevel,
+    scoreTextLeft + 210,
+    scoreTextTop,
+    scoreTextWidth
+  );
+};
+const DrawBallLife = () => {
+  pingPongCtx.fillStyle = "black";
+  pingPongCtx.fillText(
+    "Life : " + gameState.ballLife,
+    scoreTextLeft + 300,
+    scoreTextTop,
+    scoreTextWidth
+  );
+};
 // draw ball
 const DrawBall = () => {
   pingPongCtx.beginPath();
@@ -89,23 +119,3 @@ export const ResetStates = () => {
   // center paddle
   gameState.paddleLeftPos = (pingPongCanvas.width - gameState.paddleWidth) / 2;
 };
-
-// let isBricksInitialized = false;
-// const DrawBricks = () => {
-//   if (!isBricksInitialized) {
-
-
-//     isBricksInitialized = true;
-//   }
-//       for (var i = 0; i < 5; i++) {
-//       for (var j = 0; j < 5; j++) {
-//         console.log("hehe index is ", i, " ", j);
-//         DrawBrick(i,j)
-//       }
-//     }
-// };
-
-// const DrawBrick = (i,j)=>{
-//   pingPongCtx.fillStyle = "blue"
-//   pingPongCtx.fillRect(0*j, 50*i, 100*i, 10*j)
-// }
