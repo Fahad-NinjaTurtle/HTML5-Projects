@@ -1,6 +1,8 @@
+import { birdData } from "./birdManager.js";
 import { canvas, ctx } from "./canvas.js";
+import { IncrementScore } from "./gameManager.js";
 export const DrawPoles = () => {
-    ctx.fillStyle = "green"
+  ctx.fillStyle = "green";
   MovePoles();
   DrawTopPoles();
   DrawBottomPole();
@@ -27,7 +29,7 @@ const CreateBottomPoleStructure = () => {
 
     let left = canvas.width + i * 110; // spacing between poles
 
-    let poleObj = new Pole(left, top, poleWidth, height);
+    let poleObj = new Pole(left, top, poleWidth, height, false);
     poles.push(poleObj);
   }
 };
@@ -39,7 +41,7 @@ const CreateTopPolesStructure = () => {
     let top = 0;
 
     let left = canvas.width + i * 110;
-    let poleObj = new Pole(left, top, poleWidth, height);
+    let poleObj = new Pole(left, top, poleWidth, height, false);
     topPoles.push(poleObj);
   }
 };
@@ -52,7 +54,7 @@ const DrawTopPoles = () => {
       topPoles[i].width,
       topPoles[i].height
     );
-    console.log("drawn top poles are ", i);
+    // console.log("drawn top poles are ", i);
   }
 };
 
@@ -60,7 +62,7 @@ const DrawBottomPole = () => {
   for (var i = 0; i < poleCount; i++) {
     //   pole = new Pole(poleX, poleY, poleWidth, poleHeight);
     ctx.fillRect(poles[i].left, poles[i].top, poles[i].width, poles[i].height);
-    console.log("drawn poles are ", i);
+    // console.log("drawn poles are ", i);
   }
 };
 
@@ -69,30 +71,63 @@ const MovePoles = () => {
     let p = poles[i];
 
     p.left -= 2;
-
+    DetectBottomCrossed(p);
     if (p.left + p.width < 0) {
       p.left = canvas.width + 100;
       p.height = Math.random() * 100 + 130;
       p.top = canvas.height - p.height;
+      p.isScored = false;
     }
   }
   for (let i = 0; i < topPoles.length; i++) {
     let p = topPoles[i];
 
     p.left -= 2;
+    DetectTopCrossed(p);
 
     if (p.left + p.width < 0) {
       p.left = canvas.width + 100;
       p.height = Math.random() * 100 + 130;
       p.top = 0;
+      p.isScored = false;
     }
   }
+
+  VerifyBothPolesCrossed();
 };
 export class Pole {
-  constructor(left, top, width, height) {
+  constructor(left, top, width, height, isScored) {
     this.height = height;
     this.width = width;
     this.top = top;
     this.left = left;
+    this.isScored = isScored;
   }
 }
+
+var isTopCrossed = false;
+const DetectTopCrossed = (pole) => {
+  if (pole.left + pole.width < birdData.x && !pole.isScored) {
+    console.log("top passed");
+    pole.isScored = true;
+    isTopCrossed = true;
+  }
+};
+
+var isBottomCrossed = false;
+const DetectBottomCrossed = (pole) => {
+  if (pole.left + pole.width < birdData.x && !pole.isScored) {
+    console.log("bottom passed");
+    pole.isScored = true;
+    isBottomCrossed = true;
+  }
+};
+
+const VerifyBothPolesCrossed = () => {
+  if (isTopCrossed && isBottomCrossed) {
+    console.log("both pipes crossed");
+    isTopCrossed = false;
+    isBottomCrossed = false;
+    IncrementScore();
+  }
+};

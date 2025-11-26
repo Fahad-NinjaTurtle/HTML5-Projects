@@ -1,4 +1,5 @@
 import { ctx } from "./canvas.js";
+import { flapSound } from "./soundManager.js";
 
 let topY = 230;
 let leftX = 230;
@@ -28,6 +29,7 @@ export const ApplyGravityOnBird = () => {
 export const ApplyJumpOnBird = () => {
   velocity = -jumpForce;
   console.log("jump");
+  flapSound.play();
 };
 
 export const birdData = {

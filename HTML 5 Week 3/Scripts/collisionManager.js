@@ -3,6 +3,7 @@ import { canvas } from "./canvas.js";
 import { GameOver } from "./gameManager.js";
 import { topPoles } from "./poleManager.js";
 import { poles } from "./poleManager.js";   // bottom poles also needed
+import { hitSound } from "./soundManager.js";
 
 export const CollisionCheck = () => {
 
@@ -18,12 +19,14 @@ export const CollisionCheck = () => {
 
         // ---- TOP POLE COLLISION ----
         if (circleRectCollide(birdX, birdY, r, t.left, t.top, t.width, t.height)) {
+            hitSound.play();
             GameOver();
             return;
         }
 
         // ---- BOTTOM POLE COLLISION ----
         if (circleRectCollide(birdX, birdY, r, b.left, b.top, b.width, b.height)) {
+            hitSound.play();
             GameOver();
             return;
         }
