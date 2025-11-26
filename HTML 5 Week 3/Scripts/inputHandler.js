@@ -8,3 +8,9 @@ canvas.addEventListener("click", ()=>{
 canvas.addEventListener("touchstart", ()=>{
     ApplyJumpOnBird();
 })
+
+canvas.addEventListener("keydown", (e)=>{
+    if(e.code == 'Space'){
+        ApplyJumpOnBird();
+    }
+})
